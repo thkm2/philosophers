@@ -6,7 +6,7 @@
 /*   By: kgiraud <kgiraud@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 13:42:07 by kgiraud           #+#    #+#             */
-/*   Updated: 2024/12/09 14:44:25 by kgiraud          ###   ########.fr       */
+/*   Updated: 2024/12/09 15:28:32 by kgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,8 @@ typedef struct s_table
 
 // utils.c
 void	return_error(char *s);
+
+// parse.c
+int		input_is_valid(int ac, char **av);
 
 #endif

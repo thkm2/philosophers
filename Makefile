@@ -2,7 +2,7 @@ NAME = philo
 
 CC = cc -Wall -Wextra -Werror
 
-SRC = main.c utils.c
+SRC = main.c utils.c parse.c init.c
 
 OBJ = ${SRC:.c=.o}
 
