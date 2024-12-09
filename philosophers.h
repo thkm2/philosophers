@@ -6,7 +6,7 @@
 /*   By: kgiraud <kgiraud@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 13:42:07 by kgiraud           #+#    #+#             */
-/*   Updated: 2024/12/09 15:28:32 by kgiraud          ###   ########.fr       */
+/*   Updated: 2024/12/09 16:46:50 by kgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct s_philo
 
 typedef struct s_table
 {
-	int		time;
+	int		start_time;
 	int		nb_philos;
 	int		time_to_die;
 	int		time_to_eat;
@@ -40,6 +40,10 @@ typedef struct s_table
 void	return_error(char *s);
 
 // parse.c
+int		ft_atoi(char *s);
 int		input_is_valid(int ac, char **av);
+
+// init.c
+void	init_table(t_table *table, int ac, char **av);
 
 #endif
