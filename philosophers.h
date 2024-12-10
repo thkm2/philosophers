@@ -6,7 +6,7 @@
 /*   By: kgiraud <kgiraud@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 13:42:07 by kgiraud           #+#    #+#             */
-/*   Updated: 2024/12/09 16:46:50 by kgiraud          ###   ########.fr       */
+/*   Updated: 2024/12/10 12:11:04 by kgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,30 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <sys/time.h>
+
+typedef struct s_fork
+{
+	pthread_mutex_t		fork;
+	int					id;
+}	t_fork;
 
 typedef struct s_philo
 {
 	pthread_t		thread;
 	int				id;
-	pthread_mutex_t	fork[2];
 }	t_philo;
 
 typedef struct s_table
 {
-	int		start_time;
-	int		nb_philos;
-	int		time_to_die;
-	int		time_to_eat;
-	int		time_to_sleep;
-	int		nb_must_eat;
-	t_philo	*philos;
+	long long		start_time;
+	int				nb_philos;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				nb_must_eat;
+	t_philo			*philos;
+	t_fork			*forks;
 }	t_table;
 
 // utils.c

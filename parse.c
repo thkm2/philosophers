@@ -6,7 +6,7 @@
 /*   By: kgiraud <kgiraud@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 14:50:20 by kgiraud           #+#    #+#             */
-/*   Updated: 2024/12/09 15:38:12 by kgiraud          ###   ########.fr       */
+/*   Updated: 2024/12/10 11:30:08 by kgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	input_is_valid(int ac, char **av)
 	i = 0;
 	while (++i < ac)
 	{
-		if (!is_all_digit(av[i]))
+		if (!is_all_digit(av[i]) && ft_atoi(av[i]) <= 0)
 			return (0);
 	}
 	return (1);
