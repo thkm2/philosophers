@@ -6,7 +6,7 @@
 /*   By: kgiraud <kgiraud@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 13:42:07 by kgiraud           #+#    #+#             */
-/*   Updated: 2024/12/10 13:24:45 by kgiraud          ###   ########.fr       */
+/*   Updated: 2024/12/10 15:18:41 by kgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ typedef struct s_philo
 {
 	pthread_t		thread;
 	int				id;
+	int				meal_counter;
+	long long		last_meal;
 	t_fork			*left_fork;
 	t_fork			*right_fork;
 }	t_philo;
@@ -46,13 +48,14 @@ typedef struct s_table
 }	t_table;
 
 // utils.c
-void	return_error(char *s);
+void		return_error(char *s);
+long long	get_time_in_ms(void);
 
 // parse.c
-int		ft_atoi(char *s);
-int		input_is_valid(int ac, char **av);
+int			ft_atoi(char *s);
+int			input_is_valid(int ac, char **av);
 
 // init.c
-void	init_table(t_table *table, int ac, char **av);
+void		init_table(t_table *table, int ac, char **av);
 
 #endif

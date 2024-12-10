@@ -6,19 +6,11 @@
 /*   By: kgiraud <kgiraud@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 15:39:51 by kgiraud           #+#    #+#             */
-/*   Updated: 2024/12/10 13:44:49 by kgiraud          ###   ########.fr       */
+/*   Updated: 2024/12/10 15:18:51 by kgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
-long long	get_time_in_ms(void)
-{
-	struct timeval	tv;
-	
-	gettimeofday(&tv, NULL);
-	return ((long long)((tv.tv_sec * 1000) + (tv.tv_usec / 1000)));
-}
 
 void	init_forks(t_table *table)
 {
@@ -42,6 +34,8 @@ void	init_philos(t_table *table)
 	while (i < table->nb_philos)
 	{
 		table->philos[i].id = i + 1;
+		table->philos->meal_counter = 0;
+		table->philos->last_meal = 0;
 		table->philos[i].left_fork = &table->forks[i];
 		if (i == table->nb_philos - 1)
 			table->philos[i].right_fork = &table->forks[0];

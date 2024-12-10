@@ -6,7 +6,7 @@
 /*   By: kgiraud <kgiraud@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 13:29:19 by kgiraud           #+#    #+#             */
-/*   Updated: 2024/12/10 13:47:09 by kgiraud          ###   ########.fr       */
+/*   Updated: 2024/12/10 15:19:50 by kgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,12 @@ void	print_philos(t_table *table)
 		printf("philo right fork id : %d\n\n", table->philos[i].right_fork->id);
 		i++;
 	}
-	
 }
 
 int	main(int ac, char **av)
 {
 	t_table	table;
-	
+
 	if (!(ac == 5 || ac == 6))
 	{
 		perror("wrong number of arguments");
