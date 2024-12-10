@@ -6,7 +6,7 @@
 /*   By: kgiraud <kgiraud@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 13:42:07 by kgiraud           #+#    #+#             */
-/*   Updated: 2024/12/10 12:11:04 by kgiraud          ###   ########.fr       */
+/*   Updated: 2024/12/10 13:24:45 by kgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ typedef struct s_philo
 {
 	pthread_t		thread;
 	int				id;
+	t_fork			*left_fork;
+	t_fork			*right_fork;
 }	t_philo;
 
 typedef struct s_table
