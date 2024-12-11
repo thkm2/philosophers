@@ -6,7 +6,7 @@
 /*   By: kgiraud <kgiraud@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 13:58:23 by kgiraud           #+#    #+#             */
-/*   Updated: 2024/12/10 15:19:06 by kgiraud          ###   ########.fr       */
+/*   Updated: 2024/12/11 14:01:19 by kgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	return_error(char *s)
 {
-	perror(s);
+	printf("%s\n", s);
 	exit(1);
 }
 
