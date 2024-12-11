@@ -6,7 +6,7 @@
 /*   By: kgiraud <kgiraud@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 13:42:07 by kgiraud           #+#    #+#             */
-/*   Updated: 2024/12/10 15:18:41 by kgiraud          ###   ########.fr       */
+/*   Updated: 2024/12/11 14:30:02 by kgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <sys/time.h>
+# include <limits.h>
 
 typedef struct s_fork
 {

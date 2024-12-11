@@ -6,7 +6,7 @@
 /*   By: kgiraud <kgiraud@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 14:50:20 by kgiraud           #+#    #+#             */
-/*   Updated: 2024/12/11 14:10:35 by kgiraud          ###   ########.fr       */
+/*   Updated: 2024/12/11 14:31:09 by kgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ int	ft_atoi(char *s)
 		s++;
 	while (*s >= '0' && *s <= '9')
 	{
+		if (nb > (INT_MAX / 10 - *s - '0'))
+			return_error("int max");
 		nb *= 10;
 		nb += *s - '0';
 		s++;
