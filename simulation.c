@@ -6,22 +6,18 @@
 /*   By: kgiraud <kgiraud@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:33:12 by kgiraud           #+#    #+#             */
-/*   Updated: 2024/12/12 12:46:42 by kgiraud          ###   ########.fr       */
+/*   Updated: 2024/12/12 13:48:15 by kgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	think(t_philo *philo)
-{
-	print_log("is thinking", philo);
-	usleep(5 * 1000000);
-}
-
-void	ft_sleep(t_philo *philo)
+void	sleep_think(t_philo *philo)
 {
 	print_log("is sleeping", philo);
 	usleep(philo->table->time_to_sleep * 1000);
+	print_log("is thinking", philo);
+	usleep(5 * 1000000);
 }
 
 void	eat(t_philo *philo)
@@ -39,6 +35,8 @@ void	eat(t_philo *philo)
 		print_log("has taken a fork", philo);
 	}
 	print_log("is eating", philo);
+	philo->meal_counter += 1;
+	philo->last_meal = get_time_in_ms();
 	usleep(philo->table->time_to_eat * 1000);
 	pthread_mutex_unlock(&philo->left_fork->mutex);
 	pthread_mutex_unlock(&philo->right_fork->mutex);
@@ -52,8 +50,7 @@ void	*philo_routine(void *arg)
 	while (1)
 	{
 		eat(&philo);
-		ft_sleep(&philo);
-		think(&philo);
+		sleep_think(&philo);
 	}
 	return (NULL);
 }
