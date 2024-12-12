@@ -6,7 +6,7 @@
 /*   By: kgiraud <kgiraud@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 13:58:23 by kgiraud           #+#    #+#             */
-/*   Updated: 2024/12/12 13:05:15 by kgiraud          ###   ########.fr       */
+/*   Updated: 2024/12/12 14:07:16 by kgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,16 @@ void	print_log(char *s, t_philo *philo)
 	printf("%lld %d ", get_time_in_ms() - philo->table->start_time, philo->id);
 	printf("%s\n", s);
 	pthread_mutex_unlock(&philo->table->log_mutex);
+}
+
+int	is_end(t_table *table)
+{
+	int	rs;
+
+	rs = 0;
+	pthread_mutex_lock(&table->end_mutex);
+	if (table->end)
+		rs = 1;
+	pthread_mutex_unlock(&table->end_mutex);
+	return (rs);
 }

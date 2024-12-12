@@ -6,7 +6,7 @@
 /*   By: kgiraud <kgiraud@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 15:39:51 by kgiraud           #+#    #+#             */
-/*   Updated: 2024/12/12 12:57:58 by kgiraud          ###   ########.fr       */
+/*   Updated: 2024/12/12 14:50:01 by kgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	init_philos(t_table *table)
 	{
 		table->philos[i].id = i + 1;
 		table->philos[i].meal_counter = 0;
-		table->philos[i].last_meal = 0;
+		table->philos[i].last_meal = get_time_in_ms();
 		table->philos[i].left_fork = &table->forks[i];
 		if (i == table->nb_philos - 1)
 			table->philos[i].right_fork = &table->forks[0];
@@ -54,6 +54,7 @@ void	init_table(t_table *table, int ac, char **av)
 	table->time_to_eat = ft_atoi(av[3]);
 	table->time_to_sleep = ft_atoi(av[4]);
 	table->nb_must_eat = -1;
+	table->end = 0;
 	if (ac == 6)
 		table->nb_must_eat = ft_atoi(av[5]);
 	table->forks = (t_fork *)malloc(sizeof(t_fork) * (table->nb_philos));
@@ -65,4 +66,5 @@ void	init_table(t_table *table, int ac, char **av)
 		return_error("malloc philos error");
 	init_philos(table);
 	pthread_mutex_init(&table->log_mutex, NULL);
+	pthread_mutex_init(&table->end_mutex, NULL);
 }
