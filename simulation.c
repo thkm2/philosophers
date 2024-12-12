@@ -6,7 +6,7 @@
 /*   By: kgiraud <kgiraud@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:33:12 by kgiraud           #+#    #+#             */
-/*   Updated: 2024/12/12 19:09:10 by kgiraud          ###   ########.fr       */
+/*   Updated: 2024/12/12 19:16:24 by kgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	*philo_routine(void *arg)
 
 	philo = arg;
 	if (philo->id % 2 == 0)
-		usleep(1);
+		usleep(20);
 	while (!is_end(philo->table))
 	{
 		eat(philo);
