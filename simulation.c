@@ -6,7 +6,7 @@
 /*   By: kgiraud <kgiraud@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:33:12 by kgiraud           #+#    #+#             */
-/*   Updated: 2024/12/12 15:24:58 by kgiraud          ###   ########.fr       */
+/*   Updated: 2024/12/12 16:23:03 by kgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,20 @@ void	eat(t_philo *philo)
 	if (is_end(philo->table))
 	{
 		pthread_mutex_unlock(&philo->right_fork->mutex);
+		if (philo->id % 2 == 0)
+			pthread_mutex_unlock(&philo->left_fork->mutex);
 		return ;
 	}
 	print_log("has taken a fork", philo);
-	if (is_end(philo->table))
-		return ;
+	/* if (is_end(philo->table))
+		return ; */
 	if (philo->id % 2 != 0)
 	{
 		pthread_mutex_lock(&philo->left_fork->mutex);
 		if (is_end(philo->table))
 		{
 			pthread_mutex_unlock(&philo->left_fork->mutex);
+			pthread_mutex_unlock(&philo->right_fork->mutex);
 			return ;
 		}
 		print_log("has taken a fork", philo);
