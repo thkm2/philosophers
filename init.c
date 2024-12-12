@@ -6,7 +6,7 @@
 /*   By: kgiraud <kgiraud@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 15:39:51 by kgiraud           #+#    #+#             */
-/*   Updated: 2024/12/12 14:50:01 by kgiraud          ###   ########.fr       */
+/*   Updated: 2024/12/12 18:33:16 by kgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,6 @@ void	init_table(t_table *table, int ac, char **av)
 		return_error("malloc philos error");
 	init_philos(table);
 	pthread_mutex_init(&table->log_mutex, NULL);
+	pthread_mutex_init(&table->meal_mutex, NULL);
 	pthread_mutex_init(&table->end_mutex, NULL);
 }

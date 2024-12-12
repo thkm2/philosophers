@@ -6,7 +6,7 @@
 /*   By: kgiraud <kgiraud@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 13:48:56 by kgiraud           #+#    #+#             */
-/*   Updated: 2024/12/12 15:22:49 by kgiraud          ###   ########.fr       */
+/*   Updated: 2024/12/12 18:58:41 by kgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	*supervisor_routine(void *arg)
 	{
 		nb_eat_enough = 0;
 		i = 0;
+		pthread_mutex_lock(&table->meal_mutex);
 		while (i < table->nb_philos)
 		{
 			if (table->nb_must_eat != -1
@@ -44,10 +45,12 @@ void	*supervisor_routine(void *arg)
 				pthread_mutex_lock(&table->end_mutex);
 				table->end = 1;
 				pthread_mutex_unlock(&table->end_mutex);
+				pthread_mutex_unlock(&table->meal_mutex);
 				return (NULL);
 			}
 			i++;
 		}
-		usleep(500);
+		pthread_mutex_unlock(&table->meal_mutex);
+		usleep(100);
 	}
 }
