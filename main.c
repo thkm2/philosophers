@@ -6,7 +6,7 @@
 /*   By: kgiraud <kgiraud@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 13:29:19 by kgiraud           #+#    #+#             */
-/*   Updated: 2024/12/10 15:19:50 by kgiraud          ###   ########.fr       */
+/*   Updated: 2024/12/11 15:48:56 by kgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	main(int ac, char **av)
 	if (!input_is_valid(ac, av))
 		return_error("bad arguments");
 	init_table(&table, ac, av);
-	print_philos(&table);
+	//print_philos(&table);
+	start_simulation(&table);
 	return (0);
 }

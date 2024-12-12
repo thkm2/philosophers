@@ -6,7 +6,7 @@
 /*   By: kgiraud <kgiraud@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 13:42:07 by kgiraud           #+#    #+#             */
-/*   Updated: 2024/12/11 14:30:02 by kgiraud          ###   ########.fr       */
+/*   Updated: 2024/12/12 12:57:01 by kgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 typedef struct s_fork
 {
-	pthread_mutex_t		fork;
+	pthread_mutex_t		mutex;
 	int					id;
 }	t_fork;
 
@@ -34,6 +34,7 @@ typedef struct s_philo
 	long long		last_meal;
 	t_fork			*left_fork;
 	t_fork			*right_fork;
+	struct s_table	*table;
 }	t_philo;
 
 typedef struct s_table
@@ -46,11 +47,13 @@ typedef struct s_table
 	int				nb_must_eat;
 	t_philo			*philos;
 	t_fork			*forks;
+	pthread_mutex_t	log_mutex;
 }	t_table;
 
 // utils.c
 void		return_error(char *s);
 long long	get_time_in_ms(void);
+void		print_log(char *s, t_philo *philo);
 
 // parse.c
 int			ft_atoi(char *s);
@@ -58,5 +61,8 @@ int			input_is_valid(int ac, char **av);
 
 // init.c
 void		init_table(t_table *table, int ac, char **av);
+
+// simulation.c
+void		start_simulation(t_table *table);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: kgiraud <kgiraud@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 15:39:51 by kgiraud           #+#    #+#             */
-/*   Updated: 2024/12/10 15:18:51 by kgiraud          ###   ########.fr       */
+/*   Updated: 2024/12/12 12:57:58 by kgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	init_forks(t_table *table)
 	i = 0;
 	while (i < table->nb_philos)
 	{
-		if (pthread_mutex_init(&table->forks[i].fork, NULL) != 0)
+		if (pthread_mutex_init(&table->forks[i].mutex, NULL) != 0)
 			return_error("init mutex error");
 		table->forks[i].id = i + 1;
 		i++;
@@ -34,13 +34,14 @@ void	init_philos(t_table *table)
 	while (i < table->nb_philos)
 	{
 		table->philos[i].id = i + 1;
-		table->philos->meal_counter = 0;
-		table->philos->last_meal = 0;
+		table->philos[i].meal_counter = 0;
+		table->philos[i].last_meal = 0;
 		table->philos[i].left_fork = &table->forks[i];
 		if (i == table->nb_philos - 1)
 			table->philos[i].right_fork = &table->forks[0];
 		else
 			table->philos[i].right_fork = &table->forks[i + 1];
+		table->philos[i].table = table;
 		i++;
 	}
 }
@@ -63,4 +64,5 @@ void	init_table(t_table *table, int ac, char **av)
 	if (!table->philos)
 		return_error("malloc philos error");
 	init_philos(table);
+	pthread_mutex_init(&table->log_mutex, NULL);
 }

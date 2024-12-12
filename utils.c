@@ -6,7 +6,7 @@
 /*   By: kgiraud <kgiraud@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 13:58:23 by kgiraud           #+#    #+#             */
-/*   Updated: 2024/12/11 14:01:19 by kgiraud          ###   ########.fr       */
+/*   Updated: 2024/12/12 13:05:15 by kgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,12 @@ long long	get_time_in_ms(void)
 
 	gettimeofday(&tv, NULL);
 	return ((long long)((tv.tv_sec * 1000) + (tv.tv_usec / 1000)));
+}
+
+void	print_log(char *s, t_philo *philo)
+{
+	pthread_mutex_lock(&philo->table->log_mutex);
+	printf("%lld %d ", get_time_in_ms() - philo->table->start_time, philo->id);
+	printf("%s\n", s);
+	pthread_mutex_unlock(&philo->table->log_mutex);
 }
