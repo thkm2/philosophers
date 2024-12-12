@@ -6,7 +6,7 @@
 /*   By: kgiraud <kgiraud@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 13:29:19 by kgiraud           #+#    #+#             */
-/*   Updated: 2024/12/11 15:48:56 by kgiraud          ###   ########.fr       */
+/*   Updated: 2024/12/12 16:37:16 by kgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main(int ac, char **av)
 
 	if (!(ac == 5 || ac == 6))
 	{
-		perror("wrong number of arguments");
+		printf("wrong number of arguments\n");
 		return (1);
 	}
 	if (!input_is_valid(ac, av))
