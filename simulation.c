@@ -6,7 +6,7 @@
 /*   By: kgiraud <kgiraud@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:33:12 by kgiraud           #+#    #+#             */
-/*   Updated: 2024/12/12 16:23:03 by kgiraud          ###   ########.fr       */
+/*   Updated: 2024/12/12 16:34:37 by kgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,13 @@ void	eat(t_philo *philo)
 		return ;
 	}
 	print_log("has taken a fork", philo);
-	/* if (is_end(philo->table))
-		return ; */
+	if (philo->table->nb_philos == 1)
+	{
+		pthread_mutex_unlock(&philo->right_fork->mutex);
+		while (!is_end(philo->table))
+			usleep(1000);
+		return ;
+	}
 	if (philo->id % 2 != 0)
 	{
 		pthread_mutex_lock(&philo->left_fork->mutex);
