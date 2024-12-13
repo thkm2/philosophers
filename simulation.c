@@ -6,62 +6,51 @@
 /*   By: kgiraud <kgiraud@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:33:12 by kgiraud           #+#    #+#             */
-/*   Updated: 2024/12/13 14:07:31 by kgiraud          ###   ########.fr       */
+/*   Updated: 2024/12/13 15:53:45 by kgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	sleep_think(t_philo *philo)
-{
-	if (is_end(philo->table))
-		return ;
-	print_log("is sleeping", philo);
-	usleep(philo->table->time_to_sleep * 1000);
-	if (is_end(philo->table))
-		return ;
-	print_log("is thinking", philo);
-}
-
-void	eat(t_philo *philo)
+int	take_forks(t_philo *philo)
 {
 	if (philo->id % 2 == 0)
 	{
 		pthread_mutex_lock(&philo->left_fork->mutex);
 		if (is_end(philo->table))
-		{
-			pthread_mutex_unlock(&philo->left_fork->mutex);
-			return ;
-		}
+			return (pthread_mutex_unlock(&philo->left_fork->mutex), 0);
 		print_log("has taken a fork", philo);
 	}
 	pthread_mutex_lock(&philo->right_fork->mutex);
 	if (is_end(philo->table))
 	{
-		pthread_mutex_unlock(&philo->right_fork->mutex);
 		if (philo->id % 2 == 0)
 			pthread_mutex_unlock(&philo->left_fork->mutex);
-		return ;
+		return (pthread_mutex_unlock(&philo->right_fork->mutex), 0);
 	}
 	print_log("has taken a fork", philo);
-	if (philo->table->nb_philos == 1)
-	{
-		pthread_mutex_unlock(&philo->right_fork->mutex);
-		while (!is_end(philo->table))
-			usleep(1000);
-		return ;
-	}
 	if (philo->id % 2 != 0)
 	{
 		pthread_mutex_lock(&philo->left_fork->mutex);
 		if (is_end(philo->table))
-		{
-			pthread_mutex_unlock(&philo->left_fork->mutex);
-			pthread_mutex_unlock(&philo->right_fork->mutex);
-			return ;
-		}
+			return (pthread_mutex_unlock(&philo->left_fork->mutex),
+				pthread_mutex_unlock(&philo->right_fork->mutex), 0);
 		print_log("has taken a fork", philo);
 	}
+	return (1);
+}
+
+void	eat(t_philo *philo)
+{
+	if (philo->table->nb_philos == 1)
+	{
+		print_log("has taken a fork", philo);
+		while (!is_end(philo->table))
+			usleep(1000);
+		return ;
+	}
+	if (!take_forks(philo))
+		return ;
 	print_log("is eating", philo);
 	pthread_mutex_lock(&philo->table->meal_mutex);
 	philo->meal_counter += 1;
@@ -82,7 +71,13 @@ void	*philo_routine(void *arg)
 	while (!is_end(philo->table))
 	{
 		eat(philo);
-		sleep_think(philo);
+		if (is_end(philo->table))
+			return (NULL);
+		print_log("is sleeping", philo);
+		usleep(philo->table->time_to_sleep * 1000);
+		if (is_end(philo->table))
+			return (NULL);
+		print_log("is thinking", philo);
 	}
 	return (NULL);
 }
