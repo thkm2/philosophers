@@ -6,24 +6,29 @@
 /*   By: kgiraud <kgiraud@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 13:29:19 by kgiraud           #+#    #+#             */
-/*   Updated: 2024/12/12 16:37:16 by kgiraud          ###   ########.fr       */
+/*   Updated: 2024/12/13 14:01:35 by kgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	print_philos(t_table *table)
+void	destroy_free(t_table *table)
 {
-	int i = 0;
+	int	i;
 
+	i = 0;
 	while (i < table->nb_philos)
 	{
-		printf("i : %d\n", i);
-		printf("philo id : %d\n", table->philos[i].id);
-		printf("philo left fork id : %d\n", table->philos[i].left_fork->id);
-		printf("philo right fork id : %d\n\n", table->philos[i].right_fork->id);
+		pthread_mutex_destroy(&table->forks[i].mutex);
 		i++;
 	}
+	free(table->forks);
+	free(table->philos);
+	table->forks = NULL;
+	table->philos = NULL;
+	pthread_mutex_destroy(&table->log_mutex);
+	pthread_mutex_destroy(&table->meal_mutex);
+	pthread_mutex_destroy(&table->end_mutex);
 }
 
 int	main(int ac, char **av)
@@ -38,7 +43,7 @@ int	main(int ac, char **av)
 	if (!input_is_valid(ac, av))
 		return_error("bad arguments");
 	init_table(&table, ac, av);
-	//print_philos(&table);
 	start_simulation(&table);
+	destroy_free(&table);
 	return (0);
 }

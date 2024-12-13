@@ -6,7 +6,7 @@
 /*   By: kgiraud <kgiraud@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:33:12 by kgiraud           #+#    #+#             */
-/*   Updated: 2024/12/12 19:16:24 by kgiraud          ###   ########.fr       */
+/*   Updated: 2024/12/13 14:07:31 by kgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	eat(t_philo *philo)
 
 void	*philo_routine(void *arg)
 {
-	t_philo *philo;
+	t_philo	*philo;
 
 	philo = arg;
 	if (philo->id % 2 == 0)
@@ -89,14 +89,15 @@ void	*philo_routine(void *arg)
 
 void	start_simulation(t_table *table)
 {
-	int	i;
+	int			i;
 	pthread_t	supervisor;
 
 	i = 0;
 	pthread_create(&supervisor, NULL, supervisor_routine, table);
 	while (i < table->nb_philos)
 	{
-		pthread_create(&table->philos[i].thread, NULL, philo_routine, &table->philos[i]);
+		pthread_create(&table->philos[i].thread, NULL,
+			philo_routine, &table->philos[i]);
 		i++;
 	}
 	pthread_join(supervisor, NULL);
