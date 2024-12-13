@@ -6,7 +6,7 @@
 /*   By: kgiraud <kgiraud@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:33:12 by kgiraud           #+#    #+#             */
-/*   Updated: 2024/12/13 15:53:45 by kgiraud          ###   ########.fr       */
+/*   Updated: 2024/12/13 16:44:27 by kgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	take_forks(t_philo *philo)
 {
-	if (philo->id % 2 == 0)
+	if (philo->id != philo->table->nb_philos)
 	{
 		pthread_mutex_lock(&philo->left_fork->mutex);
 		if (is_end(philo->table))
@@ -24,12 +24,12 @@ int	take_forks(t_philo *philo)
 	pthread_mutex_lock(&philo->right_fork->mutex);
 	if (is_end(philo->table))
 	{
-		if (philo->id % 2 == 0)
+		if (philo->id != philo->table->nb_philos)
 			pthread_mutex_unlock(&philo->left_fork->mutex);
 		return (pthread_mutex_unlock(&philo->right_fork->mutex), 0);
 	}
 	print_log("has taken a fork", philo);
-	if (philo->id % 2 != 0)
+	if (philo->id == philo->table->nb_philos)
 	{
 		pthread_mutex_lock(&philo->left_fork->mutex);
 		if (is_end(philo->table))
