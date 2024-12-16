@@ -6,13 +6,13 @@
 /*   By: kgiraud <kgiraud@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:33:12 by kgiraud           #+#    #+#             */
-/*   Updated: 2024/12/16 15:51:25 by kgiraud          ###   ########.fr       */
+/*   Updated: 2024/12/16 16:50:40 by kgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-/* int	take_forks(t_philo *philo)
+/*int	take_forks(t_philo *philo)
 {
 	if (philo->id != philo->table->nb_philos)
 	{
@@ -38,7 +38,7 @@
 		print_log("has taken a fork", philo);
 	}
 	return (1);
-} */
+}*/
 
 int	take_forks(t_philo *philo)
 {
@@ -98,7 +98,7 @@ void	*philo_routine(void *arg)
 
 	philo = arg;
 	if (philo->id % 2 == 0)
-		usleep(20);
+		usleep(900);
 	while (!is_end(philo->table))
 	{
 		eat(philo);
