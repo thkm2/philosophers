@@ -6,13 +6,13 @@
 /*   By: kgiraud <kgiraud@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:33:12 by kgiraud           #+#    #+#             */
-/*   Updated: 2024/12/13 16:44:27 by kgiraud          ###   ########.fr       */
+/*   Updated: 2024/12/16 13:46:46 by kgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	take_forks(t_philo *philo)
+/* int	take_forks(t_philo *philo)
 {
 	if (philo->id != philo->table->nb_philos)
 	{
@@ -38,6 +38,35 @@ int	take_forks(t_philo *philo)
 		print_log("has taken a fork", philo);
 	}
 	return (1);
+} */
+
+int	take_forks(t_philo *philo)
+{
+	if (philo->left_fork->id < philo->right_fork->id)
+	{
+		pthread_mutex_lock(&philo->left_fork->mutex);
+		if (is_end(philo->table))
+			return (pthread_mutex_unlock(&philo->left_fork->mutex), 0);
+		print_log("has taken a fork", philo);
+		pthread_mutex_lock(&philo->right_fork->mutex);
+		if (is_end(philo->table))
+			return (pthread_mutex_unlock(&philo->left_fork->mutex),
+				pthread_mutex_unlock(&philo->right_fork->mutex), 0);
+		print_log("has taken a fork", philo);
+	}
+	else
+	{
+		pthread_mutex_lock(&philo->right_fork->mutex);
+		if (is_end(philo->table))
+			return (pthread_mutex_unlock(&philo->right_fork->mutex), 0);
+		print_log("has taken a fork", philo);
+		pthread_mutex_lock(&philo->left_fork->mutex);
+		if (is_end(philo->table))
+			return (pthread_mutex_unlock(&philo->right_fork->mutex),
+				pthread_mutex_unlock(&philo->left_fork->mutex), 0);
+		print_log("has taken a fork", philo);
+	}
+	return (1);
 }
 
 void	eat(t_philo *philo)
@@ -49,6 +78,10 @@ void	eat(t_philo *philo)
 			usleep(1000);
 		return ;
 	}
+	pthread_mutex_lock(&philo->table->meal_mutex);
+	while (get_time_in_ms() - philo->last_meal < philo->table->time_to_die)
+		usleep(100);
+	pthread_mutex_unlock(&philo->table->meal_mutex);
 	if (!take_forks(philo))
 		return ;
 	print_log("is eating", philo);

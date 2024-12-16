@@ -6,7 +6,7 @@
 /*   By: kgiraud <kgiraud@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 13:58:23 by kgiraud           #+#    #+#             */
-/*   Updated: 2024/12/12 19:09:02 by kgiraud          ###   ########.fr       */
+/*   Updated: 2024/12/16 13:53:31 by kgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,9 @@ int	is_end(t_table *table)
 		rs = 1;
 	pthread_mutex_unlock(&table->end_mutex);
 	return (rs);
+}
+
+int	can_eat(t_philo *philo)
+{
+	
 }
