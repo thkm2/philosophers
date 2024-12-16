@@ -6,7 +6,7 @@
 /*   By: kgiraud <kgiraud@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:33:12 by kgiraud           #+#    #+#             */
-/*   Updated: 2024/12/16 13:46:46 by kgiraud          ###   ########.fr       */
+/*   Updated: 2024/12/16 15:51:25 by kgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,8 @@ void	eat(t_philo *philo)
 			usleep(1000);
 		return ;
 	}
-	pthread_mutex_lock(&philo->table->meal_mutex);
-	while (get_time_in_ms() - philo->last_meal < philo->table->time_to_die)
+	if (!can_eat(philo))
 		usleep(100);
-	pthread_mutex_unlock(&philo->table->meal_mutex);
 	if (!take_forks(philo))
 		return ;
 	print_log("is eating", philo);

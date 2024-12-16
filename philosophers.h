@@ -6,7 +6,7 @@
 /*   By: kgiraud <kgiraud@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 13:42:07 by kgiraud           #+#    #+#             */
-/*   Updated: 2024/12/16 13:09:11 by kgiraud          ###   ########.fr       */
+/*   Updated: 2024/12/16 15:50:04 by kgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void		return_error(char *s);
 long long	get_time_in_ms(void);
 void		print_log(char *s, t_philo *philo);
 int			is_end(t_table *table);
+int			can_eat(t_philo *philo);
 
 // parse.c
 int			ft_atoi(char *s);
