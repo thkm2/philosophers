@@ -6,7 +6,7 @@
 /*   By: kgiraud <kgiraud@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 13:58:23 by kgiraud           #+#    #+#             */
-/*   Updated: 2024/12/16 15:49:42 by kgiraud          ###   ########.fr       */
+/*   Updated: 2024/12/18 15:56:48 by kgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,23 +44,4 @@ int	is_end(t_table *table)
 		rs = 1;
 	pthread_mutex_unlock(&table->end_mutex);
 	return (rs);
-}
-
-int	can_eat(t_philo *philo)
-{
-	int	i;
-	int	time;
-
-	i = 0;
-	pthread_mutex_lock(&philo->table->meal_mutex);
-	while (i < philo->table->nb_philos)
-	{
-		time = get_time_in_ms();
-		if (time - philo->table->philos[i].last_meal
-			> time - philo->last_meal)
-			return (pthread_mutex_unlock(&philo->table->meal_mutex), 0);
-		i++;
-	}
-	pthread_mutex_unlock(&philo->table->meal_mutex);
-	return (1);
 }

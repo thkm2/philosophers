@@ -6,43 +6,15 @@
 /*   By: kgiraud <kgiraud@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:33:12 by kgiraud           #+#    #+#             */
-/*   Updated: 2024/12/16 16:50:40 by kgiraud          ###   ########.fr       */
+/*   Updated: 2024/12/18 16:19:59 by kgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-/*int	take_forks(t_philo *philo)
-{
-	if (philo->id != philo->table->nb_philos)
-	{
-		pthread_mutex_lock(&philo->left_fork->mutex);
-		if (is_end(philo->table))
-			return (pthread_mutex_unlock(&philo->left_fork->mutex), 0);
-		print_log("has taken a fork", philo);
-	}
-	pthread_mutex_lock(&philo->right_fork->mutex);
-	if (is_end(philo->table))
-	{
-		if (philo->id != philo->table->nb_philos)
-			pthread_mutex_unlock(&philo->left_fork->mutex);
-		return (pthread_mutex_unlock(&philo->right_fork->mutex), 0);
-	}
-	print_log("has taken a fork", philo);
-	if (philo->id == philo->table->nb_philos)
-	{
-		pthread_mutex_lock(&philo->left_fork->mutex);
-		if (is_end(philo->table))
-			return (pthread_mutex_unlock(&philo->left_fork->mutex),
-				pthread_mutex_unlock(&philo->right_fork->mutex), 0);
-		print_log("has taken a fork", philo);
-	}
-	return (1);
-}*/
-
 int	take_forks(t_philo *philo)
 {
-	if (philo->left_fork->id < philo->right_fork->id)
+	if (philo->left_fork->id)
 	{
 		pthread_mutex_lock(&philo->left_fork->mutex);
 		if (is_end(philo->table))
@@ -52,18 +24,6 @@ int	take_forks(t_philo *philo)
 		if (is_end(philo->table))
 			return (pthread_mutex_unlock(&philo->left_fork->mutex),
 				pthread_mutex_unlock(&philo->right_fork->mutex), 0);
-		print_log("has taken a fork", philo);
-	}
-	else
-	{
-		pthread_mutex_lock(&philo->right_fork->mutex);
-		if (is_end(philo->table))
-			return (pthread_mutex_unlock(&philo->right_fork->mutex), 0);
-		print_log("has taken a fork", philo);
-		pthread_mutex_lock(&philo->left_fork->mutex);
-		if (is_end(philo->table))
-			return (pthread_mutex_unlock(&philo->right_fork->mutex),
-				pthread_mutex_unlock(&philo->left_fork->mutex), 0);
 		print_log("has taken a fork", philo);
 	}
 	return (1);
@@ -78,8 +38,6 @@ void	eat(t_philo *philo)
 			usleep(1000);
 		return ;
 	}
-	if (!can_eat(philo))
-		usleep(100);
 	if (!take_forks(philo))
 		return ;
 	print_log("is eating", philo);
