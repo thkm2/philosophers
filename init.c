@@ -6,11 +6,24 @@
 /*   By: kgiraud <kgiraud@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 15:39:51 by kgiraud           #+#    #+#             */
-/*   Updated: 2024/12/13 13:57:24 by kgiraud          ###   ########.fr       */
+/*   Updated: 2024/12/18 12:24:06 by kgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+void	destroy_n_forks(t_table *table, int n)
+{
+	int	i;
+
+	i = 0;
+	while (i < n)
+	{
+		pthread_mutex_destroy(&table->forks[i].mutex);
+		i++;
+	}
+	free(table->forks);
+}
 
 void	init_forks(t_table *table)
 {
@@ -20,7 +33,10 @@ void	init_forks(t_table *table)
 	while (i < table->nb_philos)
 	{
 		if (pthread_mutex_init(&table->forks[i].mutex, NULL) != 0)
+		{
+			destroy_n_forks(table, i);
 			return_error("init mutex error");
+		}
 		table->forks[i].id = i + 1;
 		i++;
 	}
@@ -46,6 +62,24 @@ void	init_philos(t_table *table)
 	}
 }
 
+int	general_mutex_init(t_table *table)
+{
+	if (pthread_mutex_init(&table->log_mutex, NULL) != 0)
+		return (0);
+	if (pthread_mutex_init(&table->meal_mutex, NULL) != 0)
+	{
+		pthread_mutex_destroy(&table->log_mutex);
+		return (0);
+	}
+	if (pthread_mutex_init(&table->end_mutex, NULL) != 0)
+	{
+		pthread_mutex_destroy(&table->log_mutex);
+		pthread_mutex_destroy(&table->meal_mutex);
+		return (0);
+	}
+	return (1);
+}
+
 void	init_table(t_table *table, int ac, char **av)
 {
 	table->start_time = get_time_in_ms();
@@ -62,13 +96,11 @@ void	init_table(t_table *table, int ac, char **av)
 		return_error("malloc forks error");
 	init_forks(table);
 	table->philos = (t_philo *)malloc(sizeof(t_philo) * (table->nb_philos));
-	if (!table->philos)
+	if (!table->philos || !general_mutex_init(table))
 	{
-		free(table->forks);
-		return_error("malloc philos error");
+		destroy_n_forks(table, table->nb_philos);
+		free(table->philos);
+		return_error("malloc philos error or init mutex error");
 	}
 	init_philos(table);
-	pthread_mutex_init(&table->log_mutex, NULL);
-	pthread_mutex_init(&table->meal_mutex, NULL);
-	pthread_mutex_init(&table->end_mutex, NULL);
 }
